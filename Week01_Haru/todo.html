@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang ="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width , intial-scale=1.0">
+    <title>Todo list</title>
+    <style>
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            gap: 30px;
+            font-family: "Apple SD Gothic Neo", sans-serif;
+        }
+
+        .head {
+            background-color: white;
+            color: black;
+            font-size: 40px;
+            font-weight: bold;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            top: 0;
+            padding: 0;
+        }
+
+        .box {
+            background-color: white;
+            color: gray;
+            border: 2px solid blue;
+            
+            width: 80%;
+            height: 30px;
+            padding-left: 15px;
+
+            display: flex;
+            align-items: center;
+
+        }
+
+        .todo {
+            display: flex;
+            align-items:flex-start;
+            gap: 300px;
+            margin: auto;
+            flex-shrink: 1;
+            justify-content: center;
+            min-width: 0;
+    }   
+
+        .willDo {
+            font-size: 15px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .did {
+            font-size: 15px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .todo-item {
+            font-size: 13px;
+            margin-top: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .completeBox {
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            background-color: ghostwhite;
+            color: gray;
+            border: 1px solid skyblue;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .completeBox:hover {width: 18px;
+        height: 18px;
+        font-size: 8px;}
+
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="head">
+            UMC Study Plan
+        </header>
+        <input type="text" class="box" id = "input" placeholder="스터디 계획을 작성해보세요">
+    <div class="todo">
+        <span class="willDo">해야 할 일
+            <div id ="willDoList" style ="width: 100%;"></div>
+        </span>
+        <span class="did">해낸 일
+            <div id="didList" style="width: 100%;"></div>
+        </span>
+    </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('input');
+        const willDoList = document.getElementById('willDoList');
+        const didList = document.getElementById('didList');
+
+        input.addEventListener('keydown', function(e) {
+            if(e.key === 'Enter') {
+                if(input.value.trim() !== "") {
+                    addTodo(input.value);
+                    input.value = "";
+                }
+            }
+        });
+
+        function addTodo(text) {
+            const div = document.createElement('div');
+            div.className = 'todo-item';
+
+            const Text1 = document.createElement('span');
+            Text1.innerText = text;
+
+            const btn = document.createElement('div');
+            btn.className = 'completeBox';
+            btn.innerText = '완료';
+
+            btn.onclick = function() {
+                if(div.parentElement.id === 'willDoList') {
+                    didList.appendChild(div);
+                    btn.innerText = '삭제';
+                } else {div. remove();}
+            };
+
+            div.appendChild(Text1);
+            div.appendChild(btn);
+            willDoList.appendChild(div);
+        }
+    </script>
+</body>
+</html>

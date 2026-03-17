@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>Transition 실습</title>
+
+<style>
+
+body{
+  text-align:center;
+}
+
+/* 박스 기본 상태 */
+.box{
+  width:200px;
+  height:200px;
+  background-color:purple;
+  margin:100px auto;
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  /* transition-property */
+  transition-property: background-color;
+
+  /* transition-duration */
+  transition-duration: 2s;
+
+  /* transition-timing-function */
+  transition-timing-function: ease-in-out;
+
+  /* transition-delay */
+  transition-delay: 0.5s;
+
+}
+
+/* hover 상태 */
+.box:hover{
+  background-color:orange;
+  transform: scale(1.3);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Transition 실습 (마우스를 올려보세요)</h2>
+
+<div class="box">
+  BOX
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>Grid 3x3 실습</title>
+
+<style>
+
+*{
+  margin:0;
+  box-sizing:border-box;
+}
+
+.container{
+  width:600px;
+  height:600px;
+  background-color:lightgray;
+  border:3px solid black;
+
+  display:grid;
+  place-items: center;
+
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  gap:5px;
+}
+
+.box1{
+  background-color:purple;
+  color:white;
+  width: 150px;
+  height: 150px;
+}
+.box2{
+  background-color:blue;
+  color:white;
+  width: 100px;
+  height: 100px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Grid 3x3 실습</h2>
+
+<div class="container">
+  <div class="box1">1</div>
+  <div class="box2">2</div>
+  <div class="box1">3</div>
+  <div class="box2">4</div>
+  <div class="box1">5</div>
+  <div class="box2">6</div>
+  <div class="box1">7</div>
+  <div class="box2">8</div>
+  <div class="box1">9</div>
+</div>
+
+</body>
+
+</html>

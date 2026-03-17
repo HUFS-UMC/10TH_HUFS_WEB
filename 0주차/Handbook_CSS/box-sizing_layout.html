@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>box-sizing 비교</title>
+
+<style>
+
+/* 전체 스타일 */
+body{
+  font-family: Arial, sans-serif;
+}
+
+/* 컨테이너 */
+.container{
+  width: 600px;
+  border: 2px solid black;
+  margin-bottom: 40px;
+}
+
+/* 공통 박스 스타일 */
+.box{
+  width: 32%;
+  padding: 20px;
+  background-color: purple;
+  color: white;
+  display: inline-block;
+  border: 5px solid black;
+}
+
+/* content-box */
+.content-box .box{
+  box-sizing: content-box;
+}
+
+/* border-box */
+.border-box .box{
+  box-sizing: border-box;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>1. content-box</h2>
+<p>padding과 border가 width에 추가되어 레이아웃이 깨질 수 있음</p>
+
+<div class="container content-box">
+  <div class="box">box1</div>
+  <div class="box">box2</div>
+  <div class="box">box3</div>
+</div>
+
+
+<h2>2. border-box</h2>
+<p>padding과 border가 width에 포함되어 레이아웃이 유지됨</p>
+
+<div class="container border-box">
+  <div class="box">box1</div>
+  <div class="box">box2</div>
+  <div class="box">box3</div>
+</div>
+
+</body>
+</html>

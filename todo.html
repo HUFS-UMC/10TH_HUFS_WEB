@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>UMC Study Plan</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">UMC Study Plan</h1>
+        </header>
+
+        <div class="input-wrapper">
+            <input type="text" id="todo-input" placeholder="스터디 계획을 작성해보세요!" autofocus>
+        </div>
+
+        <div class="content-wrapper">
+            <section class="list-section">
+                <h2 class="list-title">해야 할 일</h2>
+                <ul id="todo-list" class="todo-items"></ul>
+            </section>
+
+            <section class="list-section">
+                <h2 class="list-title">해낸 일</h2>
+                <ul id="done-list" class="todo-items"></ul>
+            </section>
+        </div>
+    </div>
+    <script src="todo.js"></script>
+</body>
+</html>

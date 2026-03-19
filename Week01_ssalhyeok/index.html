@@ -1,49 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-<meta charset="UTF-8">
-<title>UMC Todo List</title>
-<link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>UMC Todo List</title>
+        <link rel="stylesheet" href="./style.css">
+        <script type="module" src="./dist/app.js" defer></script>
+        <title>UMC TODO</title>
+    </head>
 
-<body>
+    <body>
+        <div class="todo-container">
+            <h1 class="todo-container__header">SSAL TODO</h1>
+            <form id="todo-form" class="todo-container__form">
+                <input 
+                    type="text" 
+                    id="todo-input" 
+                    class="todo-container__input" 
+                    placeholder="할 일을 입력해주세요." 
+                    required
+                />
+                <button type="submit" class="todo-container__button">할일 추가</button>
+            </form>
+            <div class="render-container">
+                <div class="render-container__section">
+                    <h2 class="render-container__title">할 일</h2>
+                    <ul id="todo-list" class="render-container__list"></ul>
+                </div>
+                <div class="render-container__section">
+                    <h2 class="render-container__title">완료</h2>
+                    <ul id="done-list" class="render-container__list"></ul>
+                </div>
+            </div>
+        </div>
+    </body> 
 
-<div class="todo">
-
-<h1 class="todo__title">UMC STUDY PLAN</h1>
-
-<input
-class="todo__input"
-id="todo-input"
-type="text"
-placeholder="할 일을 입력하고 Enter"
-/>
-
-<div class="todo__container">
-
-<section class="todo__section">
-
-<h2 class="todo__subtitle">해야 할 일</h2>
-
-<ul id="todo-list" class="todo__list"></ul>
-
-</section>
-
-<section class="todo__section">
-
-<h2 class="todo__subtitle">완료한 일</h2>
-
-<ul id="done-list" class="todo__list"></ul>
-
-</section>
-
-</div>
-
-</div>
-
-<script type="module" src="./dist/app.js"></script>
-
-</body>
-
-</html>
+    

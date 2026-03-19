@@ -1,63 +1,87 @@
-const input = document.getElementById("todo-input") as HTMLInputElement
-const todoList = document.getElementById("todo-list") as HTMLUListElement
-const doneList = document.getElementById("done-list") as HTMLUListElement
+const todoInput = document.getElementById('todo-input') as HTMLInputElement;
+const todoForm = document.getElementById('todo-form') as HTMLFormElement;
+const todoList = document.getElementById('todo-list') as HTMLUListElement;
+const doneList = document.getElementById('done-list') as HTMLUListElement;
 
-function createTodoItem(text: string): HTMLLIElement {
+type Todo = {
+    id: number;
+    text: string;
+};
 
-const li = document.createElement("li")
-li.className = "todo__item"
+let todos: Todo[] = [];
+let doneTasks: Todo[] = [];
 
-const span = document.createElement("span")
-span.textContent = text
+const renderTasks = (): void => {
+    todoList.innerHTML = '';
+    doneList.innerHTML = '';
 
-const completeBtn = document.createElement("button")
-completeBtn.textContent = "완료"
-completeBtn.className = "todo__button todo__button--complete"
+    todos.forEach((todo) : void =>{
+        const li = createTodoElement(todo, false);
+        todoList.appendChild(li);
+    });
 
-const deleteBtn = document.createElement("button")
-deleteBtn.textContent = "삭제"
-deleteBtn.className = "todo__button todo__button--delete"
+    doneTasks.forEach((todo) : void =>{
+        const li = createTodoElement(todo, true);
+        doneList.appendChild(li);
+    });
+};
 
-completeBtn.addEventListener("click", () => {
-
-doneList.appendChild(li)
-completeBtn.remove()
-
-})
-
-deleteBtn.addEventListener("click", () => {
-
-li.remove()
-
-})
-
-li.appendChild(span)
-li.appendChild(completeBtn)
-li.appendChild(deleteBtn)
-
-return li
+const getTodoText = (): string => {
+    return todoInput.value.trim();
 }
 
-function addTodo(): void {
+const addTodo = (text:string) : void => {
+    todos.push({id: Date.now(), text})
+    todoInput.value = '';
+    renderTasks();
+};
 
-const text = input.value.trim()
-
-if (!text) return
-
-const todoItem = createTodoItem(text)
-
-todoList.appendChild(todoItem)
-
-input.value = ""
-
+const completeTodo = (todo: Todo) : void => {
+    todos = todos.filter((t): boolean => t.id !== todo.id);
+    doneTasks.push(todo);
+    renderTasks();
 }
 
-input.addEventListener("keydown", (event: KeyboardEvent) => {
-
-if (event.key === "Enter") {
-
-addTodo()
-
+const deleteTodo = (todo: Todo) : void => {
+    doneTasks = doneTasks.filter((t): boolean => t.id !== todo.id);
+    renderTasks()
 }
 
+const createTodoElement = (todo: Todo, isDone: boolean): HTMLElement => {
+    const li = document.createElement('li');
+    li.classList.add('render-container__item');
+    li.textContent = todo.text;
+
+    const button = document.createElement('button');
+    button.classList.add('render-container__item-button')
+
+    if (isDone) {
+        button.textContent = '삭제';
+        button.style.backgroundColor = '#dc3545';
+    }   else{
+        button.textContent = '완료';
+        button.style.backgroundColor = '#28a745'
+    }
+
+    button.addEventListener('click', ():void => {
+        if(isDone) {
+            deleteTodo(todo);
+        }   else{
+            completeTodo(todo);
+        }
+    });
+
+    li.appendChild(button);
+    return li;
+
+};
+
+todoForm.addEventListener('submit', (event: Event): void => {
+    event.preventDefault();
+    const text = getTodoText();
+    if (text) {
+        addTodo(text);
+    }
 })
+
+renderTasks();

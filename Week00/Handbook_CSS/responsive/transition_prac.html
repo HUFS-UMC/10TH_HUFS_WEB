@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>transition 실습</title>
+<style>
+    body{
+        margin-top: 100px;
+        margin-left: 100px;
+    }
+    .box{
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        transform: rotate(45deg);
+    }
+    .box + .box{
+        margin-top: 50px;
+    }
+    .box:hover{
+        background-color: purple;
+        transition: background-color 1s ease 0s;
+    }
+</style>
+</head>
+<body>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+</body>
+</html>

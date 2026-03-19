@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Aido Navbar</title>
+
+<style>
+
+    *{
+        box-sizing:border-box;
+        margin:0;
+        padding:0;
+    }
+
+    body{
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    a{
+        text-decoration:none;
+        color:inherit;
+    }
+
+    main{
+        display:flex;
+        justify-content:center;
+        margin-top:30px;
+    }
+
+    /* NAVBAR */
+
+    .navbar{
+        width:90%;
+        max-width:1100px;
+        min-width:320px;
+        height:80px;
+
+        border:4px solid black;
+        border-radius:50px;
+        background:#f4f4f4;
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+        box-shadow:10px 10px 0 black;
+    }
+
+    /* CONTAINER */
+
+    .navbar__container{
+        width:100%;
+        padding:0 30px;
+
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    /* LEFT */
+
+    .navbar__left{
+        display:flex;
+        align-items:center;
+        gap:15px;
+    }
+
+    .navbar__logo{
+        width:46px;
+        height:46px;
+        background:orange;
+        border:3px solid black;
+        border-radius:12px;
+        transform:rotate(-15deg);
+    }
+
+    /* RIGHT */
+
+    .navbar__right{
+        display:flex;
+        align-items:center;
+        gap:28px;
+    }
+
+    .navbar__menu{
+        font-weight:600;
+        color:#8a8a8a;
+    }
+
+    .navbar__menu:hover{
+        color:#ff6b4a;
+    }
+
+    .navbar__download{
+        color:#ff6b4a;
+        font-weight:700;
+        transition:0.1s;
+    }
+
+    .navbar__download:hover{
+        transform:scale(1.2);
+    }
+
+    /* LANGUAGE */
+
+    .navbar__lang-box{
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        border:3px solid black;
+        border-radius:40px;
+        padding:6px 10px;
+    }
+
+    .navbar__lang-label{
+        color:#999;
+        letter-spacing:4px;
+        font-size:14px;
+    }
+
+    .navbar__lang-btn{
+        width:42px;
+        height:26px;
+
+        border:3px solid black;
+        border-radius:20px;
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+        font-size:12px;
+        font-weight:700;
+
+        background:white;
+    }
+
+    .navbar__lang-btn--active{
+        background:#ff6b4a;
+        color:white;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:768px){
+        .navbar__lang-label{
+            display:none;
+        }
+    }
+    @media (max-width:620px){
+        .navbar__menu{
+            display:none;
+        }
+        .navbar__download{
+            display:none;
+        }
+        .navbar__right{
+            gap:12px;
+        }
+        .navbar__container{
+            padding:0 20px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<main>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <div class="navbar__left">
+                <div class="navbar__logo"></div>
+                <h2>Aido</h2>
+            </div>
+            <div class="navbar__right">
+                <a id="catFriends" class="navbar__menu">고양이 친구들</a>
+                <a id="appDownload" class="navbar__download">앱 다운로드</a>
+                <div class="navbar__lang-box">
+                    <span id="langLabel" class="navbar__lang-label">언어</span>
+                    <a id="KO" class="navbar__lang-btn" href="?lang=ko">KO</a>
+                    <a id="EN" class="navbar__lang-btn" href="?lang=en">EN</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</main>
+<script>
+
+const params = new URLSearchParams(window.location.search);
+let lang = params.get("lang");
+
+if(!lang){
+    lang = "ko";
+}
+
+const koBtn = document.getElementById("KO");
+const enBtn = document.getElementById("EN");
+
+const catFriends = document.getElementById("catFriends");
+const appDownload = document.getElementById("appDownload");
+const langLabel = document.getElementById("langLabel");
+
+if(lang === "en"){
+
+    enBtn.classList.add("navbar__lang-btn--active");
+
+    catFriends.textContent = "Cat Friends";
+    appDownload.textContent = "Download App";
+    langLabel.textContent = "LANGUAGE";
+
+}else{
+
+    koBtn.classList.add("navbar__lang-btn--active");
+
+    catFriends.textContent = "고양이 친구들";
+    appDownload.textContent = "앱 다운로드";
+    langLabel.textContent = "언어";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Layout 미션</title>
+<style>
+    *{
+    margin:0;
+    box-sizing:border-box;
+    color: white;
+    font-size: 30px;
+    }
+
+    .layout{
+    height:100vh;
+
+    display:grid;
+
+    grid-template-rows:
+        10%
+        35%
+        45%
+        10%;
+    }
+
+    /* top */
+
+    .layout__top{
+    display:flex;
+    }
+
+    .layout__header{
+    width:30%;
+    display:flex;
+    background-color: black;
+    justify-content:center;
+    align-items:center;
+    }
+
+    .layout__menu{
+    width:70%;
+    display:flex;
+    background-color: lightcoral;
+    justify-content:center;
+    align-items:center;
+    }
+
+    /* hero */
+
+    .layout__hero{
+    display:flex;
+    background-color: lightskyblue;
+    justify-content:center;
+    align-items:center;
+    }
+
+    /* content */
+
+    .layout__content{
+    display:flex;
+    }
+
+    .layout__main{
+    width:50%;
+    display:flex;
+    background-color: seagreen;
+    justify-content:center;
+    align-items:center;
+    }
+
+    .layout__empty{
+    width:25%;
+    }
+
+    .layout__side{
+    width:25%;
+    display:flex;
+    flex-direction:column;
+    }
+
+    .layout__image{
+    height:50%;
+    display:flex;
+    background-color: lightgray;
+    justify-content:center;
+    align-items:center;
+    }
+
+    .layout__extra{
+    height:50%;
+    display:flex;
+    background-color: lightgreen;
+    justify-content:center;
+    align-items:center;
+    }
+
+    /* banner */
+
+    .layout__banner{
+    display:flex;
+    background-color: bisque;
+    justify-content:center;
+    align-items:center;
+    }
+</style>
+</head>
+
+<body>
+    <div class="layout">
+
+        <div class="layout__top">
+            <div class="layout__header">HEADER</div>
+            <div class="layout__menu">MENU</div>
+        </div>
+
+        <div class="layout__hero">HERO</div>
+
+        <div class="layout__content">
+
+            <div class="layout__main">MAIN</div>
+
+            <div class="layout__empty"></div>
+
+            <div class="layout__side">
+            <div class="layout__image">IMAGE</div>
+            <div class="layout__extra">EXTRA</div>
+            </div>
+
+        </div>
+
+        <div class="layout__banner">BANNER</div>
+
+    </div>
+</body>
+</html>

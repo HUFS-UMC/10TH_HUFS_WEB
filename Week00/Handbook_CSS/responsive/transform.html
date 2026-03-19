@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>Transform 실습</title>
+<style>
+body{
+  font-family: Arial;
+  text-align:center;
+}
+
+.container{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  margin-top:100px;
+}
+
+.box{
+  width:120px;
+  height:120px;
+  background-color:purple;
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  transition:0.5s;
+}
+
+/* translate */
+.translate:hover{
+  transform: translate(50px, 20px);
+}
+
+/* scale */
+.scale:hover{
+  transform: scale(1.5);
+}
+
+/* rotate */
+.rotate:hover{
+  transform: rotate(45deg);
+}
+
+/* skew */
+.skew:hover{
+  transform: skew(20deg);
+}
+
+/* matrix */
+.matrix:hover{
+  transform: matrix(0.8, 0.3, 0.3, 0.8, 50, 50);
+}
+
+</style>
+</head>
+<body>
+<h2>Transform 실습 (마우스를 올려보세요)</h2>
+<div class="container">
+<div class="box translate">translate</div>
+<div class="box scale">scale</div>
+<div class="box rotate">rotate</div>
+<div class="box skew">skew</div>
+<div class="box matrix">matrix</div>
+</div>
+</body>
+</html>

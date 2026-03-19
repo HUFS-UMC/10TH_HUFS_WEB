@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SUNA TODO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="todo-app">
+        <header class="todo-app__header">
+            <h1 class="todo-app__title">SUNA TODO</h1>
+
+            <form class="todo-app__form">
+                <input 
+                    type="text" 
+                    id="todo-input" 
+                    class="todo-app__input" 
+                    placeholder="할 일 입력"
+                >
+                <button type="submit" id="add-btn" class="todo-app__add-button">
+                    할 일 추가
+                </button>
+            </form>
+        </header>
+
+        <section class="todo-app__content">
+            <article class="todo-section">
+                <h2 class="todo-section__title">할 일</h2>
+                <ul id="todo-list" class="todo-list"></ul>
+            </article>
+
+            <article class="todo-section">
+                <h2 class="todo-section__title">완료</h2>
+                <ul id="done-list" class="todo-list"></ul>
+            </article>
+        </section>
+    </main>
+
+    <script type="module" src="dist/todo.js"></script>
+</body>
+</html>

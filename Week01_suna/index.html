@@ -2,32 +2,39 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMC 10th ToDo List</title>
+    <title>SUNA TODO</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="todo-container">
-        <header class="todo-header">
-            <h1 class="todo-header__title">UMC Study Plan</h1>
+    <main class="todo-app">
+        <header class="todo-app__header">
+            <h1 class="todo-app__title">SUNA TODO</h1>
+
+            <form class="todo-app__form">
+                <input 
+                    type="text" 
+                    id="todo-input" 
+                    class="todo-app__input" 
+                    placeholder="할 일 입력"
+                >
+                <button type="submit" id="add-btn" class="todo-app__add-button">
+                    할 일 추가
+                </button>
+            </form>
         </header>
 
-        <section class="todo-input-section">
-            <input type="text" id="todo-input" class="todo-input-section__input" placeholder="스터디 계획을 작성해보세요!" autofocus>
-        </section>
-
-        <main class="todo-main">
-            <div class="todo-list-container">
-                <h2 class="todo-list-container__title">해야 할 일</h2>
+        <section class="todo-app__content">
+            <article class="todo-section">
+                <h2 class="todo-section__title">할 일</h2>
                 <ul id="todo-list" class="todo-list"></ul>
-            </div>
+            </article>
 
-            <div class="todo-list-container">
-                <h2 class="todo-list-container__title">해낸 일</h2>
+            <article class="todo-section">
+                <h2 class="todo-section__title">완료</h2>
                 <ul id="done-list" class="todo-list"></ul>
-            </div>
-        </main>
-    </div>
+            </article>
+        </section>
+    </main>
 
     <script type="module" src="dist/todo.js"></script>
 </body>

@@ -1,45 +1,40 @@
 "use strict";
-const input = document.getElementById('todo-input');
+const form = document.querySelector('.todo-app__form');
+const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
 const doneList = document.getElementById('done-list');
-input.addEventListener('keydown', (e) => {
-    if (e.isComposing)
+const addTodo = () => {
+    const text = todoInput.value.trim();
+    if (!text)
         return;
-    if (e.key === 'Enter' && input.value.trim() !== '') {
-        createTodoItem(input.value.trim());
-        input.value = '';
-    }
-});
-function createTodoItem(text) {
     const li = document.createElement('li');
     li.className = 'todo-item';
-    const span = document.createElement('span');
-    span.className = 'todo-item__text';
-    span.textContent = text;
-    const completeBtn = document.createElement('button');
-    completeBtn.className = 'todo-item__button';
-    completeBtn.textContent = '완료';
+    li.innerHTML = `
+        <span class="todo-item__text">${text}</span>
+        <button class="todo-item__button todo-item__button--complete">완료</button>
+    `;
+    const completeBtn = li.querySelector('.todo-item__button--complete');
     completeBtn.addEventListener('click', () => {
         moveToDone(li, text);
     });
-    li.appendChild(span);
-    li.appendChild(completeBtn);
     todoList.appendChild(li);
-}
-function moveToDone(oldLi, text) {
-    oldLi.remove();
+    todoInput.value = '';
+};
+const moveToDone = (item, text) => {
+    item.remove();
     const li = document.createElement('li');
     li.className = 'todo-item';
-    const span = document.createElement('span');
-    span.className = 'todo-item__text';
-    span.textContent = text;
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'todo-item__button';
-    deleteBtn.textContent = '삭제';
+    li.innerHTML = `
+        <span class="todo-item__text">${text}</span>
+        <button class="todo-item__button todo-item__button--delete">삭제</button>
+    `;
+    const deleteBtn = li.querySelector('.todo-item__button--delete');
     deleteBtn.addEventListener('click', () => {
         li.remove();
     });
-    li.appendChild(span);
-    li.appendChild(deleteBtn);
     doneList.appendChild(li);
-}
+};
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    addTodo();
+});

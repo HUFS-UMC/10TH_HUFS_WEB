@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Layout</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .layout {
+      width: 900px;
+      margin: 20px auto;
+      display: grid;
+      grid-template-rows: 100px 360px 400px 120px;
+    }
+
+    /* top area */
+    .layout__top {
+      display: flex;
+    }
+
+    .layout__header {
+      width: 25%;
+      background: #09122d;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
+
+    .layout__menu {
+      width: 75%;
+      background: #f53b50;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
+
+    /* hero area */
+    .layout__hero {
+      background: #5b8fca;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 52px;
+    }
+
+    /* content area */
+    .layout__content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      height: 100%;
+    }
+
+    .layout__main {
+      background: #24395b;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 42px;
+    }
+
+    .layout__spacer {
+      background: #ffffff;
+    }
+
+    .layout__side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .layout__image {
+      background: #c8e5e6;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 34px;
+    }
+
+    .layout__extra {
+      background: #4fc19f;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 34px;
+    }
+
+    /* banner area */
+    .layout__banner {
+      background: #f2cc69;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="layout__top">
+      <div class="layout__header">HEADER</div>
+      <div class="layout__menu">MENU</div>
+    </div>
+
+    <div class="layout__hero">HERO</div>
+
+    <div class="layout__content">
+      <div class="layout__main">MAIN</div>
+      <div class="layout__spacer"></div>
+      <div class="layout__side">
+        <div class="layout__image">IMAGE</div>
+        <div class="layout__extra">EXTRA</div>
+      </div>
+    </div>
+
+    <div class="layout__banner">BANNER</div>
+  </div>
+</body>
+</html>

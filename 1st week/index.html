@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>UMC TODO</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./dist/script.js" defer></script>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <div class="todo-card">
+
+      <h1>YONG TODO</h1>
+
+      <div class="input-area">
+        <input id="todo-input" type="text" placeholder="할 일을 입력하세요">
+        <button id="add-button">추가</button>
+      </div>
+
+      <div class="lists">
+
+        <div class="list-section">
+          <h2>해야 할 일</h2>
+          <ul id="todo-list"></ul>
+        </div>
+
+        <div class="list-section">
+          <h2>해낸 일</h2>
+          <ul id="done-list"></ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>

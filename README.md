@@ -8,24 +8,24 @@ UMC 10기 한국외대 Web 레포지토리
   - 파일 드래그: 내 컴퓨터에서 업로드할 파일이나 폴더를 브라우저 화면으로 끌어다 놓습니다.   
   - 커밋(저장): 하단의 'Commit changes' 박스에 작업 내용을 간단히 적고, [Commit changes] 버튼을 눌러 완료합니다.
 ### 2. Git 터미널(CLI)을 이용한 업로드 (개발자 방식)
-- 내 컴퓨터의 로컬 저장소와 연결하여 명령어로 업로드하는 방법입니다. 
-  1.  로컬 저장소 설정: 업로드할 폴더에서 터미널을 열고 Git을 초기화합니다.
+내 컴퓨터의 로컬 저장소와 연결하여 명령어로 업로드하는 방법입니다. 
+1.  로컬 저장소 설정: 업로드할 폴더에서 터미널을 열고 Git을 초기화합니다.
+```bash
+git init
+git remote add origin https://github.com
+```
+2. 해당 브랜치로 이동:
+```bash
+git fetch origin
+git checkout -b Week01_Kite origin/Week01_Kite
+# 만약 브랜치가 이미 있다면: git checkout Week01_Kite
+```
+3. 파일 추가 및 커밋:
   ```bash
-  git init
-  git remote add origin https://github.com
+  git add .
+  git commit -m "Week01 과제 제출"
   ```
-  2. 해당 브랜치로 이동:
-  ```bash
-  git fetch origin
-  git checkout -b Week01_Kite origin/Week01_Kite
-  # 만약 브랜치가 이미 있다면: git checkout Week01_Kite
-  ```
-  3. 파일 추가 및 커밋:
-    ```bash
-    git add .
-    git commit -m "Week01 과제 제출"
-    ```
-  4. 푸시(업로드):
-  ```bash
-    git push origin Week01_Kite
-  ```
+4. 푸시(업로드):
+```bash
+  git push origin Week01_Kite
+```

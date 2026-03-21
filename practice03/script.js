@@ -12,8 +12,7 @@ planForm.addEventListener("submit", (e) => {
   addTodoItem(inputValue);
   planInput.value = "";
 });
-
-function addTodoItem(text) {
+function createPlanItem(text, buttonText, buttonHandler) {
   const list = document.createElement("li");
   list.className = "plan__item";
 
@@ -21,39 +20,33 @@ function addTodoItem(text) {
   span.className = "plan__text";
   span.textContent = text;
 
-  const doneButton = document.createElement("button");
-  doneButton.className = "plan__button";
-  doneButton.textContent = "완료";
+  const button = document.createElement("button");
+  button.className = "plan__button";
+  button.textContent = buttonText;
 
-  doneButton.addEventListener("click", () => {
-    list.remove();
-    addDoneItem(text);
+  button.addEventListener("click", () => {
+    buttonHandler(list, text);
   });
 
   list.appendChild(span);
-  list.appendChild(doneButton);
+  list.appendChild(button);
+
+  return list;
+}
+
+function addTodoItem(text) {
+  const list = createPlanItem(text, "완료", (list, text) => {
+    list.remove();
+    addDoneItem(text);
+  });
 
   todoList.appendChild(list);
 }
 
 function addDoneItem(text) {
-  const list = document.createElement("li");
-  list.className = "plan__item";
-
-  const span = document.createElement("span");
-  span.className = "plan__text";
-  span.textContent = text;
-
-  const deleteButton = document.createElement("button");
-  deleteButton.className = "plan__button";
-  deleteButton.textContent = "삭제";
-
-  deleteButton.addEventListener("click", () => {
+  const list = createPlanItem(text, "삭제", (list) => {
     list.remove();
   });
-
-  list.appendChild(span);
-  list.appendChild(deleteButton);
 
   doneList.appendChild(list);
 }

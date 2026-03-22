@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>간단 Todo List</title>
+<style>
+/* === CSS 시작 === */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 20px;
+  background: #f5f5f5;
+}
+
+header h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#todo-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+section h2 {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+li.completed span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+}
+
+button.complete-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+button.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+/* === CSS 끝 === */
+</style>
+</head>
+<body>
+
+<header>
+  <h1>UMC STUDY PLAN</h1>
+</header>
+
+<main>
+  <input type="text" id="todo-input" placeholder="할 일을 입력하고 Enter를 누르세요">
+
+  <section id="todo-section">
+    <h2>해야 할 일</h2>
+    <ul id="todo-list"></ul>
+  </section>
+
+  <section id="done-section">
+    <h2>해낸 일</h2>
+    <ul id="done-list"></ul>
+  </section>
+</main>
+
+<script>
+/* === JS 시작 === */
+const todoInput = document.getElementById("todo-input");
+const todoList = document.getElementById("todo-list");
+const doneList = document.getElementById("done-list");
+
+// todo 항목 생성
+function createTodoItem(text) {
+  const li = document.createElement("li");
+
+  const span = document.createElement("span");
+  span.textContent = text;
+  li.appendChild(span);
+
+  const completeBtn = document.createElement("button");
+  completeBtn.textContent = "완료";
+  completeBtn.className = "complete-btn";
+  li.appendChild(completeBtn);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "삭제";
+  deleteBtn.className = "delete-btn";
+  li.appendChild(deleteBtn);
+
+  // 완료 버튼 이벤트
+  completeBtn.addEventListener("click", () => {
+    completeTodo(li, completeBtn);
+  });
+
+  // 삭제 버튼 이벤트
+  deleteBtn.addEventListener("click", () => deleteTodo(li));
+
+  return li;
+}
+
+// Todo 추가
+function addTodo() {
+  const text = todoInput.value.trim();
+  if (!text) return;
+  const li = createTodoItem(text);
+  todoList.appendChild(li);
+  todoInput.value = "";
+}
+
+// 완료 처리
+function completeTodo(li, completeBtn) {
+  li.classList.toggle("completed");
+  if (li.classList.contains("completed")) {
+    // 완료 → 해낸 일로 이동
+    doneList.appendChild(li);
+    completeBtn.remove(); // 해낸 일에서는 완료 버튼 제거
+  } else {
+    // 되돌리기 → 해야 할 일로 이동
+    todoList.appendChild(li);
+    // 완료 버튼 다시 추가
+    const newCompleteBtn = document.createElement("button");
+    newCompleteBtn.textContent = "완료";
+    newCompleteBtn.className = "complete-btn";
+    newCompleteBtn.addEventListener("click", () => completeTodo(li, newCompleteBtn));
+    li.insertBefore(newCompleteBtn, li.querySelector(".delete-btn"));
+  }
+}
+
+// 삭제 처리
+function deleteTodo(li) {
+  li.remove();
+}
+
+// Enter 입력으로 추가
+todoInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addTodo();
+});
+/* === JS 끝 === */
+</script>
+
+</body>
+</html>

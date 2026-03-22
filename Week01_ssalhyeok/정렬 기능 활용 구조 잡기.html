@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정렬 기능 활용 구조 잡기</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:100vh;
+}
+
+.container{
+
+display:grid;
+
+grid-template-columns: 140px 140px 140px 140px;
+grid-template-rows: 60px 280px 140px 140px 90px;
+
+grid-template-areas:
+
+"header menu menu menu"
+"hero hero hero hero"
+"main main empty image"
+"main main empty extra"
+"banner banner banner banner";
+
+height:100vh;
+
+}
+
+
+.box{
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:20px;
+font-weight:bold;
+
+}
+
+
+.header{
+grid-area:header;
+background:#0d1b34;
+color:white;
+}
+
+.menu{
+grid-area:menu;
+background:#ef3d4a;
+color:white;
+}
+
+.hero{
+grid-area:hero;
+background:#5d88b8;
+color:white;
+}
+
+.main{
+grid-area:main;
+background:#2e3e58;
+color:white;
+}
+
+.empty{
+grid-area:empty;
+background:#e8e8e8;
+}
+
+.image{
+grid-area:image;
+background:#a6c3c6;
+}
+
+.extra{
+grid-area:extra;
+background:#56b395;
+}
+
+.banner{
+grid-area:banner;
+background:#f3c86c;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header box">HEADER</div>
+<div class="menu box">MENU</div>
+
+<div class="hero box">HERO</div>
+
+<div class="main box">MAIN</div>
+<div class="empty box"></div>
+
+<div class="image box">IMAGE</div>
+<div class="extra box">EXTRA</div>
+
+<div class="banner box">BANNER</div>
+
+</div>
+
+</body>
+</html>

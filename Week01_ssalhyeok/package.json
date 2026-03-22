@@ -1,0 +1,24 @@
+{
+  "name": "10th_hufs_web",
+  "version": "1.0.0",
+  "description": "UMC 10기 한국외대 Web 레포지토리",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HUFS-UMC/10TH_HUFS_WEB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HUFS-UMC/10TH_HUFS_WEB/issues"
+  },
+  "homepage": "https://github.com/HUFS-UMC/10TH_HUFS_WEB#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

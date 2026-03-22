@@ -55,12 +55,22 @@ const createTodoElement = (todo: Todo, isDone: boolean): HTMLElement => {
     const button = document.createElement('button');
     button.classList.add('render-container__item-button')
 
-    if (isDone) {
+/*    if (isDone) {
         button.textContent = '삭제';
         button.style.backgroundColor = '#dc3545';
     }   else{
         button.textContent = '완료';
         button.style.backgroundColor = '#28a745'
+    }
+        색깔은 css에서 한번에 관리하자는 리뷰를 참고하여 수정
+*/
+
+    if (isDone) {
+        button.textContent = '삭제';
+        button.classList.add('btn-delete');
+    } else {
+        button.textContent = '완료';
+        button.classList.add('btn-complete');
     }
 
     button.addEventListener('click', ():void => {

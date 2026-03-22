@@ -84,23 +84,41 @@ margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 8px; /* 코드리뷰 후 gap 추가하였습니다. */
 
     padding: 8px;
     border-bottom: 1px solid #ddd;
     background-color: #f9f9f9;
     border-radius: 6px;
     margin-bottom: 6px;
-    width: 100%
+    width: 100%; /* 코드리뷰 후 빼먹은 세미콜론 추가하였습니다. */
 }
 
 .render-container__item-button {
-    background-color: #dc3545;
+    /*background-color: #dc3545;  코드리뷰 후 색깔 지정시 겹치는 부분이 있어 삭제*/ 
     color: white;
     border: none;
     padding: 6px 10px;
     border-radius: 6px;
     font-size: 12px;
     transition: background-color 0.3s ease;
+}
+
+/*코드리뷰 후 버튼 색깔 지정을 css로 옮김*/
+.btn-complete {
+  background-color: #28a745;
+}
+
+.btn-complete:hover {
+  background-color: #218838;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
 }
 
 .render-container__item-button:hover {

@@ -6,7 +6,7 @@ if (!todoForm || !todoInput || !todoList || !doneList) {
   throw new Error("필요한 HTML 요소를 찾을 수 없음");
 }
 
-function createTodoItem(text: string): void {
+function createTodoItem(text: string): HTMLLIElement{
   const li = document.createElement("li");
   li.className = "todo-app__item";
 

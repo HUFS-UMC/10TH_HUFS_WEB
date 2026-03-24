@@ -1,3 +1,4 @@
+import {useTodo} from "../context/TodoContext"
 interface Task {
   id: number;
   text: string;
@@ -6,30 +7,19 @@ interface Task {
 
 interface TodoProps {
   task: Task;
-  onComplete: (id: number) => void;
-  onDelete: (id: number) => void;
 }
 
-const Todo = ({ task, onComplete, onDelete }: TodoProps) => {
+const Todo = ({ task }: TodoProps) => {
+    const {deleteTask} = useTodo();
   return (
     <li className="render-container__item">
       <span className="render-container__item-text">{task.text}</span>
-
-      {task.isDone ? (
-        <button
-          className="render-container__item-button"
-          onClick={() => onDelete(task.id)}
-        >
-          삭제
-        </button>
-      ) : (
-        <button
-          className="render-container__item-button"
-          onClick={() => onComplete(task.id)}
-        >
-          완료
-        </button>
-      )}
+      <button
+        className="render-container__item-button"
+        onClick={() => deleteTask(task.id)}
+      >
+        삭제
+      </button>
     </li>
   );
 };

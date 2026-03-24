@@ -1,0 +1,42 @@
+body{
+    font-family:Arial;
+    padding:20px;
+}
+
+/* 공통 스타일 */
+.box{
+    background:#4f7db3;
+    color:#fff;
+    margin:10px;
+    padding:10px;
+}
+
+/* ===== block ===== */
+.block{
+    display:block;
+    width:200px;
+    height:60px;
+}
+
+/* ===== inline ===== */
+.inline{
+    display:inline;
+    width:200px;   /* 적용 안됨 */
+    height:60px;  /* 적용 안됨 */
+    background:#ef3b45;
+}
+
+/* ===== inline-block ===== */
+.inline-block{
+    display:inline-block;
+    width:200px;
+    height:60px;
+    background:#52b08f;
+}
+
+/* 구분용 */
+.section{
+    border:2px dashed #aaa;
+    padding:10px;
+    margin-bottom:30px;
+}

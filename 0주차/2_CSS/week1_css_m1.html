@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Responsive Navbar</title>
+
+<style>
+body{
+    margin:0;
+    background:#e6e6e6;
+    font-family:Arial;
+}
+
+/* ===== Navbar ===== */
+.nav{
+    width:90%;
+    margin:30px auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:14px 24px;
+
+    background:#efefef;
+    border:2px solid #222;
+    border-radius:50px;
+
+    box-shadow:
+        6px 6px 0 #222,
+        inset 0 2px 0 #fff;
+}
+
+/* 좌측 */
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-box{
+    width:32px;
+    height:32px;
+    background:#ff7a5c;
+    border-radius:10px;
+    border:2px solid #222;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* 중앙 */
+.nav-center{
+    display:flex;
+    gap:28px;
+}
+
+.nav-center a{
+    text-decoration:none;
+    color:#444;
+    font-size:14px;
+}
+
+.nav-center a.active{
+    color:#ff5a3c;
+    font-weight:bold;
+}
+
+/* 우측 */
+.nav-right{
+    display:flex;
+    align-items:center;
+}
+
+/* 언어 버튼 */
+.lang-box{
+    display:flex;
+    gap:4px;
+    padding:3px;
+
+    background:#fff;
+    border:2px solid #222;
+    border-radius:25px;
+
+    box-shadow:2px 2px 0 #222 inset;
+}
+
+.lang-box span{
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.lang-box .active{
+    background:#ff5a3c;
+    color:#fff;
+}
+
+/* ===== 반응형 핵심 ===== */
+@media (max-width: 768px){
+
+    /* 메뉴 텍스트 숨김 */
+    .nav-center a{
+        display:none;
+    }
+
+    /* navbar 크기 유지 */
+    .nav{
+        justify-content:space-between;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<nav class="nav">
+
+    <div class="nav-left">
+        <div class="logo-box">🐱</div>
+        <span>Aido</span>
+    </div>
+
+    <div class="nav-center">
+        <a href="#">고양이 친구들</a>
+        <a href="#">출시 알림 받기</a>
+    </div>
+
+    <div class="nav-right">
+        <div class="lang-box">
+            <span id="koBtn" class="active">KO</span>
+            <span id="enBtn">EN</span>
+        </div>
+    </div>
+
+</nav>
+
+<script>
+const koBtn = document.getElementById("koBtn");
+const enBtn = document.getElementById("enBtn");
+
+koBtn.onclick = () => {
+    koBtn.classList.add("active");
+    enBtn.classList.remove("active");
+};
+
+enBtn.onclick = () => {
+    enBtn.classList.add("active");
+    koBtn.classList.remove("active");
+};
+</script>
+
+</body>
+</html>

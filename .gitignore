@@ -1,0 +1,21 @@
+# node
+node_modules/
+
+# vite
+.vite/
+
+# build 결과물
+dist/
+build/
+
+# 환경 변수
+*.env
+
+# macOS
+.DS_Store
+
+# vscode
+.vscode/
+
+# 기타
+*.log

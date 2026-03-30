@@ -6,7 +6,7 @@ interface MovieCardProps {
 }
 
 export default function MovieCard ({movie}: MovieCardProps) {
-    const [isHovered, setIsHovered] = useState(true);
+    const [isHovered, setIsHovered] = useState(false);
 return (
 <>
 <div

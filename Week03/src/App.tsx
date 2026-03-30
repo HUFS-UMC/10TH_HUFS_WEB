@@ -5,7 +5,8 @@ import HomePage from './pages/home';
 import NotFound from './pages/NotFound';
 import MoviePage from './pages/MoviePage';
 import RootLayout from './layout/root-layout';
-// src/App.tsx 수정
+import MovieDetailPage from "./pages/MovieDetailPage" ;
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         path: 'movies/:category', 
         element: <MoviePage />,
       },
+      {
+        path: 'movies/detail/:movieId', 
+        element: <MovieDetailPage />
+      }
     ],
   },
 ]);

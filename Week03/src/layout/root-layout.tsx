@@ -1,6 +1,5 @@
-// src/layout/root-layout.tsx
 import { Outlet } from 'react-router-dom';
-import {Navbar} from '../components/navbar';
+import {Navbar} from '../components/Navbar';
 
 const RootLayout = () => {
   return (

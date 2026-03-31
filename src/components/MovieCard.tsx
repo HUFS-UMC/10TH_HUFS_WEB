@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Movie } from "../types/movie";
-
+console.log(" MovieCard 실행됨");
 interface MovieCardProps {
     movie: Movie;
 }

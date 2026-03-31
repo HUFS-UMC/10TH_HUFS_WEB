@@ -1,0 +1,17 @@
+# 모든 폴더 안의 node_modules를 무시해라!
+**/node_modules/
+node_modules/
+
+# 빌드 결과물 무시
+dist/
+dist-ssr/
+*.local
+
+# 환경변수 파일 무시 (보안!)
+.env
+.env.local
+.env.*.local
+
+# OS 관련 파일 무시
+.DS_Store
+Thumbs.db

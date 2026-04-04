@@ -14,36 +14,24 @@ const MovieDetailPage = () => {
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
 
+    // API 요청을 관리하기 쉽게 하기 위해 한 곳에 모아 관리하자는 리뷰에 맞춰 파일에서 받아옴
     useEffect(() => {
         const fetchData = async () => {
             setIsPending(true);
 
             try {
                 const [movieRes, creditsRes] = await Promise.all([
-                    axios.get(
-                        `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-                            },
-                        }
-                    ),
-                    axios.get(
-                        `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-                            },
-                        }
-                    ),
+                    getMovieDetail(movieId!),
+                    getMovieCredits(movieId!),
                 ]);
 
                 setMovie(movieRes.data);
                 setCredits(creditsRes.data);
+                
             } catch {
-                setIsError(true);
+                setIsError(true); // 요청 실패시 에러 상태 실행
             } finally {
-                setIsPending(false);
+                setIsPending(false); // finally를 사용해서 로딩 종료
             }
         };
 
@@ -64,8 +52,8 @@ const MovieDetailPage = () => {
 
     if (isError) {
         return (
-            <div>
-                <span className="text-red-500 text-center mt-10">에러가 발생했습니다.</span>
+            <div className="text-red-500 text-center mt-10">
+                <p>에러가 발생했습니다.</p>
             </div>
         );
     }

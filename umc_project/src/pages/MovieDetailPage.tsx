@@ -1,44 +1,49 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import type { MovieDetail, Cast, CreditsResponse } from '../types/movie';
+import type { MovieDetail, CreditsResponse } from '../types/movie';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import useCustomFetch from "../hooks/useCustomFetch";
+
 
 const MovieDetailPage = () => {
   const { movieId } = useParams<{ movieId: string }>();
-  const [movie, setMovie] = useState<MovieDetail | null>(null);
-  const [cast, setCast] = useState<Cast[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const detailUrl = movieId
+  ? `/movie/${movieId}?language=ko-KR`
+  : null;
 
-  useEffect(() => {
-    const fetchMovieData = async () => {
-      setIsLoading(true);
-      setIsError(false);
-      try {
-        const options = {
-          headers: { Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}` }
-        };
+const creditsUrl = movieId
+  ? `/movie/${movieId}/credits?language=ko-KR`
+  : null;
 
-        const [detailRes, creditsRes] = await Promise.all([
-          axios.get<MovieDetail>(`https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`, options),
-          axios.get<CreditsResponse>(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko-KR`, options)
-        ]);
+const {
+  data: movie,
+  isLoading: movieLoading,
+  isError: movieError,
+  errorMessage: movieErrorMessage,
+} = useCustomFetch<MovieDetail>(detailUrl);
 
-        setMovie(detailRes.data);
-        setCast(creditsRes.data.cast.slice(0, 10)); 
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+const {
+  data: credits,
+  isLoading: creditsLoading,
+  isError: creditsError,
+  errorMessage: creditsErrorMessage,
+} = useCustomFetch<CreditsResponse>(creditsUrl);
 
-    if (movieId) fetchMovieData();
-  }, [movieId]);
+const isLoading = movieLoading || creditsLoading;
+const isError = movieError || creditsError;
+const errorMessage = movieErrorMessage || creditsErrorMessage;
+const cast = credits?.cast.slice(0, 10) ?? [];
+
+
+
 
   if (isLoading) return <div className="flex justify-center items-center h-screen"><LoadingSpinner /></div>;
-  if (isError || !movie) return <div className="text-white text-center mt-20">데이터 로딩에 실패했습니다.</div>;
+  if (isError || !movie) {
+  return (
+    <div className="text-white text-center mt-20">
+      {errorMessage ?? "데이터 로딩에 실패했습니다."}
+    </div>
+  );
+}
 
   return (
     <div className="bg-black min-h-screen text-white">

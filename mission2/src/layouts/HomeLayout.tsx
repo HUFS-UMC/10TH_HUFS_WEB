@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom"; // 🔥 Link 추가
+import { Outlet, Link } from "react-router-dom";
 
 const HomeLayout = () => {
     return (
@@ -7,8 +7,8 @@ const HomeLayout = () => {
                 <Link to="/">홈</Link>
 
                 <div className="flex gap-4">
-                    <Link to="/login">로그인</Link> {/* 🔥 추가 */}
-                    <Link to="/signup">회원가입</Link> {/* 🔥 선택 */}
+                    <Link to="/login">로그인</Link>
+                    <Link to="/signup">회원가입</Link>
                 </div>
             </nav>
 

@@ -6,7 +6,6 @@ import { signupSchema } from "../utils/validate";
 import type { SignupFormValues } from "../types/auth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-// 1. 유저 정보 타입을 여기서 정의하거나 types/auth.ts에서 가져와야 해!
 interface User {
   email: string;
   nickname: string;
@@ -16,7 +15,6 @@ const SignupPage = () => {
   const [step, setStep] = useState(1);
   const [showPw, setShowPw] = useState(false);
   
-  // 2. 🔥 여기가 핵심! <User | null>을 붙여서 타입을 확실히 알려줌
   const [_, setUser] = useLocalStorage<User | null>("user_data", null);
   
   const navigate = useNavigate();
@@ -34,7 +32,6 @@ const SignupPage = () => {
   };
 
   const onSubmit = (data: SignupFormValues) => {
-    // 이제 setUser에서 에러가 안 날 거야!
     setUser({ email: data.email, nickname: data.nickname });
     alert("🎉 회원가입 완료!");
     navigate("/");
@@ -44,7 +41,6 @@ const SignupPage = () => {
     <div className="flex flex-col items-center justify-center min-h-[80vh] p-6">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm space-y-8 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
         
-        {/* Step 1: 이메일 입력 */}
         {step === 1 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-slate-800 text-center">이메일을 입력해주세요</h2>
@@ -67,7 +63,6 @@ const SignupPage = () => {
           </div>
         )}
 
-        {/* Step 2: 비밀번호 설정 */}
         {step === 2 && (
           <div className="space-y-6">
             <div className="text-center">
@@ -106,7 +101,6 @@ const SignupPage = () => {
           </div>
         )}
 
-        {/* Step 3: 닉네임 설정 */}
         {step === 3 && (
           <div className="space-y-8 text-center">
             <h2 className="text-2xl font-bold text-slate-800">닉네임을 정해주세요</h2>

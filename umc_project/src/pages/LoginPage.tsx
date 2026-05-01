@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {signinApi} from "../apis/auth";
 import { useAuth } from "../context/AuthContext";
 
@@ -11,7 +11,9 @@ interface LoginFormValues {
 const LoginPage=()=>{
     const navigate = useNavigate();
     const { saveAccessToken } = useAuth();
+    const location = useLocation();
 
+const from = location.state?.from || "/";
     const {
     register,
     handleSubmit,
@@ -33,15 +35,18 @@ const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
       console.log("로그인 응답:", response);
 
       const accessToken = response.data.accessToken;
-    if (!accessToken) {
-      console.error("accessToken이 응답에 없습니다:", response);
-      alert("로그인 응답에서 토큰을 찾지 못했습니다.");
-      return;
-    }
-      saveAccessToken(accessToken);
-      alert("로그인 성공!!");
-      navigate("/", { replace: true });
+      const refreshToken = response.data.refreshToken;
 
+      if (!accessToken || !refreshToken) {
+        console.error("토큰이 응답에 없습니다:", response);
+        alert("로그인 응답에서 토큰을 찾지 못했습니다.");
+        return;
+      }
+
+      saveAccessToken(accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      navigate(from, { replace: true });
   } catch (error) {
     console.error(error);
     alert("로그인에 실패했습니다.");

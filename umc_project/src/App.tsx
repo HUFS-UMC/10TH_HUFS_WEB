@@ -8,6 +8,8 @@ import RootLayout from './layout/root-layout';
 import MovieDetailPage from "./pages/MovieDetailPage" ;
 import LoginPage from "./pages/LoginPage";
 import SignupPage from './pages/SignupPage';
+import ProtectedRoute from "./routes/ProtectedRoutes";
+import {AuthProvider} from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -19,27 +21,35 @@ const router = createBrowserRouter([
         index: true, 
         element: <HomePage />,
       },
-      {
-        path: 'movies/:category', 
-        element: <MoviePage />,
+      { element: <ProtectedRoute />,
+        children: [
+          {
+            path: 'movies/:category', 
+            element: <MoviePage />,
+          },
+          {
+            path: 'movies/detail/:movieId', 
+            element: <MovieDetailPage />
+          },
+        ],
       },
       {
-        path: 'movies/detail/:movieId', 
-        element: <MovieDetailPage />
-      },
-      {
-        path: "/login",
+        path: "login",
         element: <LoginPage />
       },
       {
-        path:"/signup",
+        path:"signup",
         element: <SignupPage />,
       }
     ],
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+  <RouterProvider router={router} />
+  </AuthProvider>
+);
 }
 
 export default App;

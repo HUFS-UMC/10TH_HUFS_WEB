@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useLocalStorage from "../hooks/useLocalStorage";
+import {signupApi} from "../apis/auth";
 
 const signupSchema = z
   .object({
@@ -31,7 +31,6 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 const SignupPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [, setSignupEmail] = useLocalStorage<string>("signup-email", "");
 
   const {
     register,
@@ -75,12 +74,17 @@ const SignupPage = () => {
   };
 
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
-    try {
-      console.log(data);
-      setSignupEmail(data.email);
-      navigate("/", { replace: true });
-    } catch (error) {
+    try{
+      await signupApi({
+        name: data.nickname,
+        email: data.email,
+        password: data.password,
+      });
+      alert("signup success");
+      navigate("/login", {replace: true});
+    }catch(error){
       console.error(error);
+      alert("signup fail");
     }
   };
 

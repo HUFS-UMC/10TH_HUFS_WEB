@@ -22,6 +22,18 @@ export type Lp = {
         updatedAt: Date;
         tags: Tag[];
         likes: Likes[];
-}
+};
+
+export type Comment = {
+    id: number;
+    content: string;
+    userId: number;
+    lpId: number;
+    createAt: string;
+    user: {
+        nickname: string;
+        profileImage?: string;
+    };
+};
 
 export type ResponseLpListDto =CursorBasedResponse<Lp[]>;

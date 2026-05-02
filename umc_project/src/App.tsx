@@ -9,6 +9,7 @@ import MovieDetailPage from "./pages/MovieDetailPage" ;
 import LoginPage from "./pages/LoginPage";
 import SignupPage from './pages/SignupPage';
 import ProtectedRoute from "./routes/ProtectedRoutes";
+import OAuthCallbackPage from "./pages/OAuthCallbackPage";
 import {AuthProvider} from "./context/AuthContext";
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path:"signup",
         element: <SignupPage />,
+      },
+      {
+        path: "v1/auth/google/callback",
+        element: <OAuthCallbackPage />,
       }
     ],
   },

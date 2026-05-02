@@ -7,6 +7,9 @@ interface LoginFormValues {
   email: string;
   password: string;
 }
+const handleGoogleLogin = () => {
+  window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/google/login`;
+};
 
 const LoginPage=()=>{
     const navigate = useNavigate();
@@ -113,6 +116,13 @@ const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
             }`}
             >
             {isSubmitting ? "로그인 중..." : "로그인"}
+            </button>
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full py-3 rounded-lg font-semibold bg-white text-black hover:bg-gray-200 transition-all duration-200"
+            >
+              구글로 로그인
             </button>
         </form>
       </div>

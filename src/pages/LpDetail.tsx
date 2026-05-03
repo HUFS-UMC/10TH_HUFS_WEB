@@ -4,6 +4,7 @@ import useGetLpDetail from "../hooks/queries/useGetLpDetail";
 import useLikeLp from "../hooks/queries/useLikeLp";
 import useDeleteLp from "../hooks/queries/useDeleteLp";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
+import LpCommentSection from "../components/LpCard/LpCommentSection";
 
 const LpDetail = () => {
     const { lpId } = useParams<{ lpId: string }>();
@@ -157,6 +158,9 @@ const LpDetail = () => {
                 </svg>
                 {lp.likes?.length ?? 0}
             </button>
+
+            <hr className="my-10 border-[#222]" /> {/* 구분선 하나 넣어주면 예뻐요 */}
+            <LpCommentSection lpId={id} />
 
             {/* ── 목록으로 ── */}
             <button

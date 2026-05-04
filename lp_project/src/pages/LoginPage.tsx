@@ -45,9 +45,11 @@ const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
         alert("로그인 응답에서 토큰을 찾지 못했습니다.");
         return;
       }
+      const userName = data.email.split("@")[0];
+      localStorage.setItem("userName", userName);
+      localStorage.setItem("refreshToken", refreshToken);
 
       saveAccessToken(accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
 
       navigate(from, { replace: true });
   } catch (error) {

@@ -1,66 +1,66 @@
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from './pages/home';
-import NotFound from './pages/NotFound';
-import MoviePage from './pages/MoviePage';
-import RootLayout from './layout/root-layout';
-import MovieDetailPage from "./pages/MovieDetailPage" ;
+import HomePage from "./pages/home";
+import NotFound from "./pages/NotFound";
+import RootLayout from "./layout/root-layout";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from './pages/SignupPage';
+import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import OAuthCallbackPage from "./pages/OAuthCallbackPage";
-import {AuthProvider} from "./context/AuthContext";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import LpDetailPage from "./pages/LpDetailPage";
+
+import { AuthProvider } from "./context/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootLayout />,
     errorElement: <NotFound />,
     children: [
       {
-        index: true, 
+        index: true,
         element: <HomePage />,
-      },
-      { element: <ProtectedRoute />,
-        children: [
-          {
-            path: 'movies/:category', 
-            element: <MoviePage />,
-          },
-          {
-            path: 'movies/detail/:movieId', 
-            element: <MovieDetailPage />
-          },
-        ],
       },
       {
         path: "login",
-        element: <LoginPage />
+        element: <LoginPage />,
       },
       {
-        path:"signup",
+        path: "signup",
         element: <SignupPage />,
       },
       {
         path: "v1/auth/google/callback",
         element: <OAuthCallbackPage />,
-      }
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "lp/:lpId",
+            element: <LpDetailPage />,
+          },
+        ],
+      },
     ],
   },
 ]);
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-      {import.meta.env.DEV&&<ReactQueryDevtools initialIsOpen={false} />}
+
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
-);
+  );
 }
 
 export default App;

@@ -1,34 +1,83 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const Navbar = () => {
+interface NavbarProps {
+  onToggleSidebar: () => void;
+}
+
+const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
+  const userName = localStorage.getItem("userName");
+
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("userName");
+    localStorage.removeItem("refreshToken");
     navigate("/", { replace: true });
   };
 
   return (
-    <nav className="flex gap-4 p-4">
-      <NavLink to="/">홈</NavLink>
-      <NavLink to="/movies/popular">인기 영화</NavLink>
-      <NavLink to="/movies/now_playing">상영 중</NavLink>
-      <NavLink to="/movies/top_rated">평점 높은</NavLink>
-      <NavLink to="/movies/upcoming">개봉 예정</NavLink>
-
-      {isAuthenticated ? (
-        <button type="button" onClick={handleLogout}>
-          로그아웃
+    <header className="flex h-16 items-center justify-between border-b border-zinc-800 bg-black px-5 text-white">
+      <div className="flex items-center gap-4">
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="text-white"
+          aria-label="사이드바 열기"
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="4"
+              d="M7.95 11.95h32m-32 12h32m-32 12h32"
+            />
+          </svg>
         </button>
-      ) : (
-        <>
-          <NavLink to="/login">로그인</NavLink>
-          <NavLink to="/signup">회원가입</NavLink>
-        </>
-      )}
-    </nav>
+
+        <NavLink to="/" className="text-2xl font-bold text-pink-500">
+          돌려돌려LP판
+        </NavLink>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <button type="button" className="text-xl" aria-label="검색">
+          🔍
+        </button>
+
+        {isAuthenticated ? (
+          <>
+            <span className="text-sm">
+              {userName ? `${userName}님 반갑습니다.` : "반갑습니다."}
+            </span>
+
+            <button type="button" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login">로그인</NavLink>
+
+            <NavLink
+              to="/signup"
+              className="rounded-md bg-pink-500 px-3 py-2 text-white"
+            >
+              회원가입
+            </NavLink>
+          </>
+        )}
+      </div>
+    </header>
   );
 };
 

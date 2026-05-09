@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getLpList } from "../apis/lp";
 import type { PaginationOrder } from "../types/common";
 import LpCard from "../components/LpCard";
@@ -8,13 +8,27 @@ import {LoadingSpinner} from "../components/LoadingSpinner";
 const Home = () => {
   const [sort, setSort] = useState<PaginationOrder>("desc");
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { 
+      data,
+      isLoading,
+      isError,
+      error,
+      refetch,
+      fetchNextPage,
+      hasNextPage,
+      isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["lps", sort],
-    queryFn: () =>
+    queryFn: ({pageParam}) =>
       getLpList({
         order: sort,
         limit: 20,
+        cursor: pageParam,
       }),
+      initialPageParam:0,
+      getNextPageParam: (lastPage)=>{
+        return lastPage.data.hasNext ? lastPage.data.nextCursor : undefined;
+      },
     staleTime: 1000 * 60,
     gcTime: 1000 * 60 * 5,
   });
@@ -45,7 +59,7 @@ const Home = () => {
     );
   }
 
-  const lpList = data?.data.data ?? [];
+  const lpList = data?.pages.flatMap((page)=>page.data.data) ?? [];
 
   return (
     <section>
@@ -80,6 +94,20 @@ const Home = () => {
           <LpCard key={lp.id} lp={lp} />
         ))}
       </div>
+      <div className="mt-8 flex justify-center">
+      <button
+        type="button"
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+        className="rounded-md bg-pink-500 px-4 py-2 text-white disabled:bg-gray-500"
+      >
+        {isFetchingNextPage
+          ? "불러오는 중..."
+          : hasNextPage
+            ? "더보기"
+            : "더 이상 없음"}
+      </button>
+</div>
     </section>
   );
 };

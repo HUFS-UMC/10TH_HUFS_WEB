@@ -26,3 +26,9 @@ export const getProtectedApi = async () => {
   const response = await api.get("/auth/protected");
   return response.data;
 };
+
+export const withdrawApi = async () => {
+  const { data } = await api.delete("/users");
+
+  return data;
+};

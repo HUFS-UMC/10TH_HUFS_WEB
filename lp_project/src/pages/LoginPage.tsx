@@ -13,7 +13,7 @@ const handleGoogleLogin = () => {
 
 const LoginPage=()=>{
     const navigate = useNavigate();
-    const { saveAccessToken } = useAuth();
+    const { saveAccessToken, saveUser } = useAuth();
     const location = useLocation();
 
 const from = location.state?.from || "/";
@@ -35,23 +35,42 @@ const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
       email: data.email,
       password: data.password,
     });
-      console.log("로그인 응답:", response);
 
-      const accessToken = response.data.accessToken;
-      const refreshToken = response.data.refreshToken;
+    console.log("로그인 응답:", response);
 
-      if (!accessToken || !refreshToken) {
-        console.error("토큰이 응답에 없습니다:", response);
-        alert("로그인 응답에서 토큰을 찾지 못했습니다.");
-        return;
-      }
-      const userName = data.email.split("@")[0];
-      localStorage.setItem("userName", userName);
-      localStorage.setItem("refreshToken", refreshToken);
+    const responseBody = response.data;
+    const loginData = responseBody.data ?? responseBody;
 
-      saveAccessToken(accessToken);
+    const accessToken = loginData.accessToken;
+    const refreshToken = loginData.refreshToken;
+    const userId = loginData.id;
+    const userName = loginData.name ?? data.email.split("@")[0];
+    const userEmail = loginData.email ?? data.email;
 
-      navigate(from, { replace: true });
+    if (!accessToken || !refreshToken) {
+      console.error("토큰이 응답에 없습니다:", response);
+      alert("로그인 응답에서 토큰을 찾지 못했습니다.");
+      return;
+    }
+
+    if (!userId) {
+      console.error("유저 id가 응답에 없습니다:", response);
+      alert("로그인 응답에서 유저 정보를 찾지 못했습니다.");
+      return;
+    }
+
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("userName", userName);
+
+    saveAccessToken(accessToken);
+
+    saveUser({
+      id: Number(userId),
+      name: userName,
+      email: userEmail,
+    });
+
+    navigate(from, { replace: true });
   } catch (error) {
     console.error(error);
     alert("로그인에 실패했습니다.");

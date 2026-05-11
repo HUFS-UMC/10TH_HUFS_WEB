@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
+import CreateLpModal from "../components/CreateLpModal";
+import WithdrawModal from "../components/WithdrawModal";
+import { useAuth } from "../context/AuthContext";
 
 const RootLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
-
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -56,6 +61,24 @@ const RootLayout = () => {
               👤 마이페이지
             </button>
           </div>
+            {isCreateModalOpen && (
+      <CreateLpModal onClose={() => setIsCreateModalOpen(false)} />
+    )}
+    {isAuthenticated && (
+        <div className="mt-200 border-t border-neutral-700 pt-4">
+          <button
+            type="button"
+            onClick={() => setIsWithdrawModalOpen(true)}
+            className="w-full rounded-md border border-red-500 px-4 py-2 text-sm text-red-400 hover:bg-red-500 hover:text-white"
+          >
+            탈퇴하기
+          </button>
+        </div>
+      )}
+
+      {isWithdrawModalOpen && (
+        <WithdrawModal onClose={() => setIsWithdrawModalOpen(false)} />
+      )}
         </aside>
 
         <main className="min-h-[calc(100vh-64px)] flex-1 min-w-0 p-6">
@@ -65,12 +88,13 @@ const RootLayout = () => {
 
       <button
         type="button"
-        onClick={() => navigate("/lp/create")}
+        onClick={() => setIsCreateModalOpen(true)}
         className="fixed bottom-8 right-8 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-pink-500 text-3xl text-white shadow-lg hover:bg-pink-600"
         aria-label="LP 생성"
       >
         +
       </button>
+
     </div>
   );
 };

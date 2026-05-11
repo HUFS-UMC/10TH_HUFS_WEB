@@ -44,6 +44,22 @@ export type LpComment = {
         updatedAt: string;
         author: Author;
 };
+  export type CreatePayload = {
+    title:string;
+    content: string;
+    tags: string[];
+    thumbnail: string;
+    published: boolean;
+  }
+
+  export type CreateCommentPayload = {
+  content: string;
+};
+
+export type UpdateCommentPayload = {
+  commentId: number;
+  content: string;
+};
 
 export type ResponseLpListDto = CommonResponse<CursorBasedResponse<Lp[]>>;
 
@@ -51,3 +67,4 @@ export type ResponseLpDetailDto = CommonResponse<Lp>;
 
 export type ResponseCommentListDto =
   CommonResponse<CursorBasedResponse<LpComment[]>>;
+

@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
 interface NavbarProps {
   onToggleSidebar: () => void;
 }
@@ -8,7 +7,6 @@ interface NavbarProps {
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-
   const userName = localStorage.getItem("userName");
 
   const handleLogout = () => {

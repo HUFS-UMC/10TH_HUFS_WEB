@@ -63,3 +63,15 @@ export const deleteLpComment = async (
   const {data} = await api.delete(`/lps/${lpId}/comments/${commentId}`);
   return data;
 };
+
+export const likeLp = async (lpId: string) => {
+  const { data } = await api.post(`/lps/${lpId}/likes`);
+
+  return data;
+};
+
+export const unlikeLp = async (lpId: string) => {
+  const { data } = await api.delete(`/lps/${lpId}/likes`);
+
+  return data;
+};

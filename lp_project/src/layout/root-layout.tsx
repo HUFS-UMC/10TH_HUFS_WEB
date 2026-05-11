@@ -53,7 +53,7 @@ const RootLayout = () => {
             <button
               type="button"
               onClick={() => {
-                navigate("/my");
+                navigate("/mypage");
                 closeSidebar();
               }}
               className="text-left hover:text-pink-400"

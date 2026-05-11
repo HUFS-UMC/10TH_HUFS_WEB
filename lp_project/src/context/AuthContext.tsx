@@ -9,6 +9,8 @@ type User = {
   id: number;
   name: string;
   email: string;
+  bio?: string | null;
+  avatar?: string | null;
 };
 
 interface AuthContextType {

@@ -12,15 +12,18 @@ import {
   getLpComments,
   getLpDetail,
   updateLpComment,
+  likeLp,
+  unlikeLp,
 } from "../apis/lp";
 import type { PaginationOrder } from "../types/common";
-import type { UpdateCommentPayload } from "../types/lp";
+import type { ResponseLpDetailDto, UpdateCommentPayload } from "../types/lp";
 import { useAuth } from "../context/AuthContext";
 
 const LpDetailPage = () => {
-const { user } = useAuth();
-const myId = user?.id;
   const { lpId } = useParams<{ lpId: string }>();
+
+  const { user } = useAuth();
+  const myId = user?.id;
 
   const [commentOrder, setCommentOrder] =
     useState<PaginationOrder>("desc");
@@ -36,6 +39,95 @@ const myId = user?.id;
     queryKey: ["lpDetail", lpId],
     queryFn: () => getLpDetail(lpId!),
     enabled: !!lpId,
+  });
+
+  const lp = lpDetailData?.data;
+
+  const isLiked =
+    lp?.likes?.some((like) => like.userId === myId) ?? false;
+
+  const likeCount = lp?.likes?.length ?? 0;
+
+  const likeMutation = useMutation({
+    mutationFn: () => {
+      if (!lpId) {
+        throw new Error("LP id가 없습니다.");
+      }
+
+      return isLiked ? unlikeLp(lpId) : likeLp(lpId);
+    },
+
+    onMutate: async () => {
+      if (!lpId || !myId) {
+        return;
+      }
+
+      await queryClient.cancelQueries({
+        queryKey: ["lpDetail", lpId],
+      });
+
+      const previousLpDetail =
+        queryClient.getQueryData<ResponseLpDetailDto>([
+          "lpDetail",
+          lpId,
+        ]);
+
+      queryClient.setQueryData<ResponseLpDetailDto>(
+        ["lpDetail", lpId],
+        (oldData) => {
+          if (!oldData) {
+            return oldData;
+          }
+
+          const oldLp = oldData.data;
+          const oldLikes = oldLp.likes ?? [];
+
+          const alreadyLiked = oldLikes.some(
+            (like) => like.userId === myId
+          );
+
+          const nextLikes = alreadyLiked
+            ? oldLikes.filter((like) => like.userId !== myId)
+            : [
+                ...oldLikes,
+                {
+                  id: Date.now(),
+                  userId: myId,
+                  lpId: Number(lpId),
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                },
+              ];
+
+          return {
+            ...oldData,
+            data: {
+              ...oldLp,
+              likes: nextLikes,
+            },
+          };
+        }
+      );
+
+      return { previousLpDetail };
+    },
+
+    onError: (_error, _variables, context) => {
+      if (context?.previousLpDetail) {
+        queryClient.setQueryData(
+          ["lpDetail", lpId],
+          context.previousLpDetail
+        );
+      }
+
+      alert("좋아요 처리에 실패했습니다.");
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["lpDetail", lpId],
+      });
+    },
   });
 
   const {
@@ -82,21 +174,26 @@ const myId = user?.id;
     },
   });
 
-const updateCommentMutation = useMutation({
-  mutationFn: ({ commentId, content }: UpdateCommentPayload) =>
-    updateLpComment(lpId!, commentId, {
-      content,
-    }),
+  const updateCommentMutation = useMutation({
+    mutationFn: ({ commentId, content }: UpdateCommentPayload) =>
+      updateLpComment(lpId!, commentId, {
+        content,
+      }),
 
-  onSuccess: () => {
-    queryClient.invalidateQueries({
-      queryKey: ["lpComments", lpId],
-    });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["lpComments", lpId],
+      });
 
-    setEditingCommentId(null);
-    setEditInput("");
-  },
-});
+      setEditingCommentId(null);
+      setEditInput("");
+    },
+
+    onError: (error) => {
+      console.error(error);
+      alert("댓글 수정에 실패했습니다.");
+    },
+  });
 
   const deleteCommentMutation = useMutation({
     mutationFn: (commentId: number) =>
@@ -116,6 +213,15 @@ const updateCommentMutation = useMutation({
 
   const comments =
     commentsData?.pages.flatMap((page) => page.data.data) ?? [];
+
+  const handleLikeClick = () => {
+    if (!myId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    likeMutation.mutate();
+  };
 
   const handleCreateComment = () => {
     const trimmedComment = commentInput.trim();
@@ -181,6 +287,22 @@ const updateCommentMutation = useMutation({
         <p className="mt-3 text-sm text-gray-300">
           {lpDetailData?.data.content}
         </p>
+
+        <div className="mt-4 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleLikeClick}
+            disabled={likeMutation.isPending}
+            className={`text-3xl transition ${
+              isLiked ? "text-pink-500" : "text-gray-500"
+            }`}
+            aria-label="좋아요"
+          >
+            ♥
+          </button>
+
+          <span className="text-sm text-gray-300">{likeCount}</span>
+        </div>
       </div>
 
       <div className="mt-8">
@@ -244,30 +366,30 @@ const updateCommentMutation = useMutation({
             className="rounded-md bg-neutral-800 p-4"
           >
             <div className="mb-2 flex items-center justify-between">
-              <p className="font-semibold">
-                {comment.author.name}
-              </p>
+              <p className="font-semibold">{comment.author.name}</p>
 
-                {comment.author.id === myId && (
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleStartEdit(comment.id, comment.content)}
-                      className="text-sm text-gray-300 hover:text-white"
-                    >
-                      수정
-                    </button>
+              {comment.author.id === myId && (
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleStartEdit(comment.id, comment.content)
+                    }
+                    className="text-sm text-gray-300 hover:text-white"
+                  >
+                    수정
+                  </button>
 
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteComment(comment.id)}
-                      disabled={deleteCommentMutation.isPending}
-                      className="text-sm text-red-400 hover:text-red-300 disabled:text-gray-500"
-                    >
-                      삭제
-                    </button>
-                  </div>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteComment(comment.id)}
+                    disabled={deleteCommentMutation.isPending}
+                    className="text-sm text-red-400 hover:text-red-300 disabled:text-gray-500"
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
             </div>
 
             {editingCommentId === comment.id ? (

@@ -7,7 +7,7 @@ interface NavbarProps {
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const userName = localStorage.getItem("userName");
+  const { user } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -55,7 +55,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
         {isAuthenticated ? (
           <>
             <span className="text-sm">
-              {userName ? `${userName}님 반갑습니다.` : "반갑습니다."}
+              {user?.name ? `${user?.name}님 반갑습니다.` : "반갑습니다."}
             </span>
 
             <button type="button" onClick={handleLogout}>

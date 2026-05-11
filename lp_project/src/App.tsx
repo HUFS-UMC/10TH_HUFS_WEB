@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import OAuthCallbackPage from "./pages/OAuthCallbackPage";
 import LpDetailPage from "./pages/LpDetailPage";
+import MyPage from "./pages/MyPage";
 
 import { AuthProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           {
             path: "lp/:lpId",
             element: <LpDetailPage />,
+          },
+          {
+            path: "mypage",
+            element: <MyPage />,
           },
         ],
       },

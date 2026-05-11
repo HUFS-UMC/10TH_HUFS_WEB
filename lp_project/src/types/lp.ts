@@ -7,8 +7,8 @@ export type Tag = {
 
 export type Like = {
   id: number;
-  name: number;
-  lpid: number;
+  userId: number;
+  lpId: number;
 };
 
 export type Author = {

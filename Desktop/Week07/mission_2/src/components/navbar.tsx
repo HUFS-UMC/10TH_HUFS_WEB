@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useMutation, useQueryClient } from "@tanstack/react-query"; // 1️⃣ 추가
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { api } from "../apis/axios";
 

@@ -14,7 +14,6 @@ const LpDetailPage = () => {
   const [editFile, setEditFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
 
-  // 💡 [수정 포인트 1] 내 정보를 맨 위로 끌어올림! (아래 함수들에서 에러 없이 쓰기 위해)
   const myUserName = localStorage.getItem("userName");
   const myUserId = Number(localStorage.getItem("userId"));
 
@@ -26,9 +25,8 @@ const LpDetailPage = () => {
     },
   });
 
-  // 💡 [수정 포인트 2] 데이터를 받아온 후 글쓴이 아이디 확인
   const authorUserName = lpData?.author?.email?.split("@")[0];
-  const isOwner = myUserName === authorUserName; // 테스트 끝나면 이걸로 사용 (임시: true)
+  const isOwner = myUserName === authorUserName;
 
   useEffect(() => {
     if (lpData) {
@@ -78,7 +76,6 @@ const LpDetailPage = () => {
       queryClient.setQueryData(["lpDetail", lpId], (oldData: any) => {
         if (!oldData) return oldData;
 
-        // 정교한 배열 조작 (영상 34:30 반영)
         const likedIndex = oldData.likes?.findIndex(
            (like: any) => myUserId === lpData?.author?.email?.split("@")[0] 
         ) ?? -1;
@@ -133,7 +130,6 @@ const LpDetailPage = () => {
     toggleLikeMutation();
   };
 
-  // 💡 [수정 포인트 3] 쓸데없는 괄호 `}` 삭제 완료!
 
   if (isLoading) return <div className="text-white p-10">로딩 중... 💿</div>;
   if (!lpData) return <div className="text-white p-10">데이터를 불러오지 못했어요.</div>;

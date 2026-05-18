@@ -14,7 +14,7 @@ export type CursorBasedResponse<T> = {
 export type PaginationOrder = "asc" | "desc";
 
 export type PaginationDto = {
-  cursor?: number;
+  cursor?: number| null;
   limit?: number;
   search?: string;
   order?: PaginationOrder;

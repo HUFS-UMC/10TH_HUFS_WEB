@@ -48,7 +48,11 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <button type="button" className="text-xl" aria-label="검색">
+        <button 
+          type="button"
+          className="text-xl"
+          aria-label="검색"
+         >
           🔍
         </button>
 

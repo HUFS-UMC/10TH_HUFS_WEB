@@ -75,3 +75,27 @@ export const unlikeLp = async (lpId: string) => {
 
   return data;
 };
+
+// 검색
+type SearchLpListParams = PaginationDto & {
+  search: string;
+  cursor: number | null;
+};
+
+export const getSearchLpList = async ({
+  search,
+  cursor,
+  limit = 10,
+  order = "desc",
+}: SearchLpListParams) => {
+  const { data } = await api.get<ResponseLpListDto>("/lps", {
+    params: {
+      search,
+      cursor,
+      limit,
+      order,
+    },
+  });
+
+  return data;
+};

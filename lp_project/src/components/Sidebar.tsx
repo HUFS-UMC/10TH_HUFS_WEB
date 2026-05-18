@@ -24,7 +24,6 @@ const Sidebar = ({
         bg-zinc-950 border-r border-zinc-800 p-5
         transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        md:static md:h-[calc(100vh-64px)] md:translate-x-0
       `}
     >
       <div className="mt-16 flex flex-col gap-4 md:mt-0">

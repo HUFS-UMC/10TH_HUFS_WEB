@@ -45,6 +45,7 @@ const Home = () => {
     staleTime: 1000 * 60,
     gcTime: 1000 * 60 * 5,
   });
+  
     useEffect(() => {
     if (!hasNextPage || isFetchingNextPage) return;
 
@@ -58,7 +59,7 @@ const Home = () => {
       fetchNextPage();
     }
   }, [throttledScrollY, hasNextPage, isFetchingNextPage, fetchNextPage]);
-  
+
   if (isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">

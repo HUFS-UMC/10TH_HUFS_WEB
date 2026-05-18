@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getLpList } from "../apis/lp";
 import type { PaginationOrder } from "../types/common";
 import LpCard from "../components/LpCard";
 import {LoadingSpinner} from "../components/LoadingSpinner";
+import { useThrottle } from "../hooks/useThrottle";
 
 const Home = () => {
   const [sort, setSort] = useState<PaginationOrder>("desc");
+  const [scrollY, setScrollY] =useState(0);
+
+  const throttledScrollY = useThrottle(scrollY, 3000);
+  useEffect(()=>{
+    const handleScroll = ()=>{
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return ()=>{
+      window.removeEventListener("scroll", handleScroll);
+    }
+  },[])
 
   const { 
       data,
@@ -32,7 +45,20 @@ const Home = () => {
     staleTime: 1000 * 60,
     gcTime: 1000 * 60 * 5,
   });
+    useEffect(() => {
+    if (!hasNextPage || isFetchingNextPage) return;
 
+    const scrollTop = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    const isNearBottom = scrollTop + viewportHeight >= documentHeight - 200;
+
+    if (isNearBottom) {
+      fetchNextPage();
+    }
+  }, [throttledScrollY, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  
   if (isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">

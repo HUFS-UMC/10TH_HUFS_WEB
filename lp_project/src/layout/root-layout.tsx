@@ -1,53 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import CreateLpModal from "../components/CreateLpModal";
 import WithdrawModal from "../components/WithdrawModal";
-import {SearchModal} from "../components/SearchModal";
+import { SearchModal } from "../components/SearchModal";
+import { useSidebar } from "../hooks/useSidebar";
 
 const RootLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const {
+    isSidebarOpen,
+    closeSidebar,
+    toggleSidebar,
+  } = useSidebar();
+
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-
-    const openSidebar = ()=>{
-      setIsSidebarOpen(true);
-    };
-    const closeSidebar = () => {
-      setIsSidebarOpen(false);
-    };
-    const toggleSidebar=()=>{
-      setIsSidebarOpen((prev)=>!prev);
-    };
-
-useEffect(() => {
-  if (!isSidebarOpen) return;
-
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      closeSidebar();
-    }
-  };
-  window.addEventListener("keydown", handleKeyDown);
-
-  return () => {
-    window.removeEventListener("keydown", handleKeyDown);
-  };
-}, [isSidebarOpen]);
-
-//배경 스크롤 방지.
-//  사이드바 열리기 전 overflow backup 후 닫힐 때 원래 상태로.
-useEffect(()=>{
-  if(!isSidebarOpen) return;
-  const originalOverflow = document.body.style.overflow;
-  document.body.style.overflow = "hidden";
-  return ()=>{
-    document.body.style.overflow = originalOverflow;
-  }
-},[isSidebarOpen]);
-
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -76,9 +45,10 @@ useEffect(()=>{
       </div>
 
       {isSearchModalOpen && (
-        <SearchModal 
-        open={isSearchModalOpen}
-        onClose={() => setIsSearchModalOpen(false)} />
+        <SearchModal
+          open={isSearchModalOpen}
+          onClose={() => setIsSearchModalOpen(false)}
+        />
       )}
 
       {isCreateModalOpen && (
